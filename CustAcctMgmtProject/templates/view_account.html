@@ -1,0 +1,35 @@
+{% load static %} <!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+{% block title %}View Account {% endblock title %}
+
+ {% block content %}
+
+     <table class="table">
+         <tr>
+             <td>Account Number</td>
+             <td>{{account.account_number}}</td>
+         </tr>
+         <tr>
+             <td>Account Type</td>
+             <td>{{account.account_type}}</td>
+         </tr>
+         <tr>
+             <td>Balance </td>
+             <td>{{account.balance}}</td>
+         </tr>
+         <tr>
+             <td>Agreement </td>
+             <td>{{account.agreement}}</td>
+         </tr>
+         <tr>
+             <td colspan="2"> <a href="{%url 'home' %}"> Home </a></td>
+         </tr>
+     </table>
+
+ {% endblock content %}

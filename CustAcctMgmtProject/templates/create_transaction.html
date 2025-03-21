@@ -1,0 +1,89 @@
+{% load static %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Transaction </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+{% block title %}Create Transaction{% endblock title %}
+
+ {% block content %}
+
+    {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+
+     <form action="" method="post">
+     <table class="table">
+         {{ form.as_table }}
+         <tr>
+             <td>&nbsp;</td>
+             <td><input type="submit" value="Submit"></td>
+         </tr>
+     </table>
+     {% csrf_token %}
+     </form>
+
+ {% endblock content %}
+
+<body>
+    <h4> Transaction Details </h4>
+    <table class="table table-hover table-bordered table-responsive">
+
+        {% comment %}
+          The code below will iterate over the order list and display them
+        {% endcomment %}
+
+        {% for transaction in page_obj %}
+            <tr>
+                <td> {{transaction.transaction_type}} </td>
+                <td> {{transaction.transaction_amount}} </td>
+                <td> {{transaction.initiated_date}} </td>
+                <td> {{transaction.posted_date}} </td>
+                <td> {{transaction.status}} </td>
+                <td> {{transaction.account}} </td>
+            </tr>
+        {% empty %}
+        <li>Sorry, There are no Transaction in the database </li>
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj2.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </table>
+    </div>
+</body>
+
+</html>
