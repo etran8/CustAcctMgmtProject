@@ -15,15 +15,16 @@ editCustomer – Updates an existing customer
 add_account – Creates a new Account and links it with an existing Customer.
 edit_account – Updates an existing Account.
 addTransaction – Creates a new Transaction and links it with an existing Account.
-view_home_list – Lists a list of all Customers.
-listCustomerJSON - Returns all the Customers as a JSON list.
-listAccountJSON – Returns all the Accounts as a JSON list.
-updateAccountJSON - GetProducts related to an Order – Returns all the Products associated with an Order as a JSON list
-listTransactionJSON - 
 
 To run this project, you will need to do the following:
+
 Download all these codes to your local folder and open them up in PyCharm.
 If the code is compiled without any errors then you should see this URL http://127.0.0.1:8000/
 You may first need to create a user/password login by: python manage.py createsuperuser or go to http://127.0.0.1:8000/admin/ to sign in with User ID: eric and password: eric. image
 You then go back to the home page: http://127.0.0.1:8000/home
 You then can click on the URL links on the screen or manually enter the below URLs on the browser to edit data.
+http://127.0.0.1:8000/createCustomer
+http://127.0.0.1:8000/editCustomer/1/ (where 1 is a customer id)
+http://127.0.0.1:8000/add_account/1 (where 1 is a customer id)
+http://127.0.0.1:8000/edit_account/2 (where 2 is the account id)
+http://127.0.0.1:8000/addTransaction/2 (where 3 is the order id)
