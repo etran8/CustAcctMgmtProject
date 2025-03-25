@@ -41,6 +41,7 @@ class Account(models.Model):
 
 class Transaction(models.Model):
     transaction_type = models.CharField(max_length=1, null=False)
+    # transaction_amount = models.FloatField(default=0, null=False)
     transaction_amount = models.FloatField(default=0, null=False, validators=[MinValueValidator(0)])
     initiated_date = models.DateField(default=date.today(), null=False)
     posted_date = models.DateField(default=date.today(), null=False)

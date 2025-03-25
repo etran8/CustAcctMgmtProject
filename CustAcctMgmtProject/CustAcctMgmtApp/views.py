@@ -1,8 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from .models import Customer, Account, Transaction
 from django.core.exceptions import ValidationError
 from .Serializers import CustomerSerializer, AccountSerializer, TransactionSerializer
@@ -14,7 +12,6 @@ from django.views import View
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
 from rest_framework import generics, viewsets
 from rest_framework.generics import get_object_or_404, ListCreateAPIView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -240,9 +237,6 @@ class CustomerListView(ListView):
 
 
 class CustomerListCreate(ListCreateAPIView):
-    #authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
 
@@ -258,9 +252,6 @@ class CustomerListCreate(ListCreateAPIView):
 
 
 class AccountListCreate(ListCreateAPIView):
-    #authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
     serializer_class = AccountSerializer
     # queryset = Account.objects.all().filter(customer_id=id)
 
@@ -278,8 +269,6 @@ class AccountListCreate(ListCreateAPIView):
 
 
 class CustomerUpdateView(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request, id):
         customers = Customer.objects.get(id=id)
         serializer = CustomerSerializer(customers)
@@ -295,8 +284,6 @@ class CustomerUpdateView(APIView):
 
 
 class AccountUpdateView(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request, id):
         accounts = Account.objects.get(id=id)
         serializer = AccountSerializer(accounts)
@@ -312,7 +299,6 @@ class AccountUpdateView(APIView):
 
 
 class TransactionListCreateViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
     serializer_class = TransactionSerializer
 
     def list(self, request, id):
@@ -336,100 +322,3 @@ class TransactionListCreateViewSet(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             transaction = serializer.create(serializer.validated_data)
             return Response({"Success": "Transaction '{}' created successfully".format(TransactionSerializer(transaction).data)})
-
-
-class TransactionListCreate(ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = TransactionSerializer
-
-    def list(self, request, *args, **kwargs):
-        act = self.kwargs.get('id')
-        self.queryset = Transaction.objects.all().filter(account_id=act)
-        serializer = self.get_serializer(self.get_queryset(), many=True)
-        return Response(serializer.data)
-
-    def create(self, request, *args, **kwargs):
-        serializer = TransactionSerializer(data=request.data)
-
-        # act = self.kwargs.get('id')
-        # account = Account.objects.get(id=act)
-        # transactions = request.POST
-        #
-        # tran_type = transactions.get("transaction_type")
-        # if tran_type.upper() == "C".upper():
-        #     account.balance += float(transactions.get("transaction_amount"))
-        # else:
-        #     account.balance -= float(transactions.get("transaction_amount"))
-        # account.save()
-
-        if serializer.is_valid():
-            transaction = serializer.create(serializer.validated_data)
-            return Response({"Success": "Transaction '{}' created successfully".format(TransactionSerializer(transaction).data)})
-
-
-################
-# Assignment 6 #
-################
-
-
-class CustomerView(APIView):
-    permission_classes = IsAuthenticated
-
-    def get(self, request):
-        customers = Customer.objects.all()
-        # more than one contacts are being serialized
-        serializer = CustomerSerializer(customers, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        customer_data = request.data
-
-        # Create contact from the above data
-        serializer = CustomerSerializer(data=customer_data)
-        #if request.user.has_perm("ContactsMgmtApp.add_customer"):
-        if serializer.is_valid(raise_exception=True):
-            contact_saved = serializer.save()
-        return Response({"success": "Customer '{}' created successfully".format(contact_saved.id)})
-        #else :
-         #   raise PermissionError("User does not have the Add Customer Permission")
-
-    def put(self, request):
-        customer_data = request.data
-        customer = get_object_or_404(Customer.objects.all(), pk=customer_data.get('id'))
-
-        serializer = CustomerSerializer(instance=customer, data=customer_data, partial=True)
-        if request.user.has_perm("ContactsMgmtApp.change_customer"):
-            if serializer.is_valid(raise_exception=True):
-                customer_saved = serializer.save()
-            return Response({"success": "Customer '{}' updated successfully".format(customer_saved.id)})
-        else :
-            raise PermissionError("User does not have the Edit Customer Permission")
-
-
-class AccountView(APIView):
-    def get(self, request, id):
-        #id = request.data.get('id')
-        print(" get Account called with ID = ", id)
-        accounts = Account.objects.get(id=id)
-        # more than one contacts are being serialized
-        serializer = AccountSerializer(accounts)
-        return Response(serializer.data)
-
-    def post(self, request):
-        account_data = request.data
-
-        # Create contact from the above data
-        serializer = AccountSerializer(data=account_data)
-        if serializer.is_valid(raise_exception=True):
-            contact_saved = serializer.save()
-        return Response({"success": "Contact '{}' created successfully".format(contact_saved.id)})
-
-    def put(self, request):
-        account_data = request.data
-        account = get_object_or_404(Account.objects.all(), pk=account_data.get('id'))
-
-        serializer = AccountSerializer(instance=account, data=account_data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            account_saved = serializer.save()
-        return Response({"success": "Contact '{}' updated successfully".format(account_saved.id)})
-

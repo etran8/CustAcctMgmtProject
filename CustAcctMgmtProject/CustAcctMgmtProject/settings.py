@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-# assignment 6
-import django
-from django.utils.translation import gettext
-django.utils.translation.ugettext = gettext
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
@@ -133,19 +129,3 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-        # 'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-       #'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-       'rest_framework.authentication.SessionAuthentication',
-       'rest_framework.authentication.BasicAuthentication',
-       'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
-JWT_AUTH = {
-    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-}

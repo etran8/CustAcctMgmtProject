@@ -19,8 +19,6 @@ from django.contrib import admin
 from django.urls import path
 from CustAcctMgmtApp import views
 from django.views.generic import RedirectView
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
-from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView,)
 
 
 urlpatterns = [
@@ -40,20 +38,4 @@ urlpatterns = [
     path('updateAccountJSON/<int:id>', views.AccountUpdateView.as_view(), name='update_account_json'),
     path('listTransactionJSON/<int:id>', views.TransactionListCreateViewSet.as_view({'get': 'list', 'post': 'create'}),
          name='list_transaction_json'),
-    # Assignment 6
-    path('createCustomerJSON/', views.CustomerView.as_view(), name='create_customer_json'),
-    path('listAccountJSON/', views.AccountView.as_view(), name='list_account_json'),
-    path('CreateCrTransactionJSON/<int:id>', views.TransactionListCreate.as_view(),
-         name='create_cr_transaction_json'),
-    path('CreateDbTransactionJSON/<int:id>', views.TransactionListCreate.as_view(),
-         name='create_db_transaction_json'),
-
-]
-
-urlpatterns += [
-    path('auth-jwt/', obtain_jwt_token),
-    path('auth-jwt-refresh/', refresh_jwt_token),
-    path('auth-jwt-verify/', verify_jwt_token),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

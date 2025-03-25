@@ -17,7 +17,7 @@ class CustomerTestCase(TestCase):
         acct = Account.objects.create(account_number=111, account_type='E', balance=111.11,
                                       agreement='Agreement Notes', customer=joe)
         Transaction.objects.create(transaction_type='S', transaction_amount=222.22, initiated_date=date.today(),
-                                   posted_date=date.today(), status='C', account=acct)
+                                   posted_date=date.today(), account=acct)
 
     # Test Model Creation
     def test_create_customer(self):
