@@ -27,5 +27,5 @@ You then can click on the URL links on the screen or manually enter the below UR
 2. http://127.0.0.1:8000/editCustomer/1/ (where 1 is a customer id)
 3. http://127.0.0.1:8000/add_account/1 (where 1 is a customer id)
 4. http://127.0.0.1:8000/edit_account/2 (where 2 is the account id)
-5. http://127.0.0.1:8000/addTransaction/2 (where 3 is the order id)
+5. http://127.0.0.1:8000/addTransaction/2 (where 2 is the account id)
 
