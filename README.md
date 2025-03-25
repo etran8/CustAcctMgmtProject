@@ -24,7 +24,12 @@ You may first need to create a user/password login by: python manage.py createsu
 You then go back to the home page: http://127.0.0.1:8000/home
 You then can click on the URL links on the screen or manually enter the below URLs on the browser to edit data.
 http://127.0.0.1:8000/createCustomer
+
 http://127.0.0.1:8000/editCustomer/1/ (where 1 is a customer id)
+
 http://127.0.0.1:8000/add_account/1 (where 1 is a customer id)
+
 http://127.0.0.1:8000/edit_account/2 (where 2 is the account id)
+
 http://127.0.0.1:8000/addTransaction/2 (where 3 is the order id)
+
