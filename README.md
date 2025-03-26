@@ -2,7 +2,7 @@
 This project creates a Customer Account Management application for a Bank. The web application will let the user open a new account and manage an existing account. The account will have customer details and account details.
 The business domain model deals with Customer Account Management and the entities are Customer, Account, Transactions.
 
-This application also create RESTFul APIs using the same model objects indicated above. These APIs will allow user to list and create a Customer, an Account, and a Transaction. Be able to load a customer, an Account and update it as needed.
+This application also creates RESTFul APIs using the same model objects indicated above. These APIs will allow user to list and create a Customer, an Account, and a Transaction. Be able to load a customer, an Account and update it as needed.
 
 The entities have the relationships according to the following:
 
